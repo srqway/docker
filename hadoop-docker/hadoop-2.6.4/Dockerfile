@@ -11,62 +11,68 @@ ENV PATH $HADOOP_HOME/bin:$PATH
 
 # set core-site.xml
 RUN rm $HADOOP_HOME/etc/hadoop/core-site.xml
-RUN echo '<?xml version="1.0" encoding="UTF-8"?>' >> $HADOOP_HOME/etc/hadoop/core-site.xml
-RUN echo '<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>' >> $HADOOP_HOME/etc/hadoop/core-site.xml
-RUN echo '<configuration>' >> $HADOOP_HOME/etc/hadoop/core-site.xml
-RUN echo '	<property>' >> $HADOOP_HOME/etc/hadoop/core-site.xml
-RUN echo '		<name>fs.defaultFS</name>' >> $HADOOP_HOME/etc/hadoop/core-site.xml
-RUN echo '		<value>hdfs://master:9000</value>' >> $HADOOP_HOME/etc/hadoop/core-site.xml
-RUN echo '	</property>' >> $HADOOP_HOME/etc/hadoop/core-site.xml
-RUN echo '</configuration>' >> $HADOOP_HOME/etc/hadoop/core-site.xml
+RUN echo '\
+<?xml version="1.0" encoding="UTF-8"?>\n\
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>\n\
+<configuration>\n\
+	<property>\n\
+		<name>fs.defaultFS</name>\n\
+		<value>hdfs://master:9000</value>\n\
+	</property>\n\
+</configuration>\n\
+' >> $HADOOP_HOME/etc/hadoop/core-site.xml
 
 # set hdfs-site.xml
 RUN rm $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '<?xml version="1.0" encoding="UTF-8"?>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '<configuration>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '	<property>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '		<name>dfs.namenode.http-address</name>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '		<value>master1:50070</value>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '	</property>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '	<property>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '		<name>dfs.namenode.name.dir</name>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '		<value>file://tmp/dfs/name</value>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '	</property>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '	<property>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '		<name>dfs.namenode.secondary.http-address</name>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '		<value>master2:50090</value>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '	</property>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '	<property>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '		<name>dfs.namenode.checkpoint.dir</name>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '		<value>file://tmp/dfs/namesecondary</value>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '	</property>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '	<property>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '		<name>dfs.namenode.checkpoint.edits.dir</name>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '		<value>file://tmp/dfs/namesecondary</value>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '	</property>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '	<property>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '		<name>dfs.datanode.data.dir</name>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '		<value>file://tmp/dfs/data</value>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '	</property>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '	<property>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '		<name>dfs.blocksize</name>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '		<value>1m</value>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '	</property>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '	<property>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '		<name>dfs.replication</name>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '		<value>2</value>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '	</property>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-RUN echo '</configuration>' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+RUN echo '\
+<?xml version="1.0" encoding="UTF-8"?>\n\
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>\n\
+<configuration>\n\
+	<property>\n\
+		<name>dfs.namenode.http-address</name>\n\
+		<value>master1:50070</value>\n\
+	</property>\n\
+	<property>\n\
+		<name>dfs.namenode.name.dir</name>\n\
+		<value>file://tmp/dfs/name</value>\n\
+	</property>\n\
+	<property>\n\
+		<name>dfs.namenode.secondary.http-address</name>\n\
+		<value>master2:50090</value>\n\
+	</property>\n\
+	<property>\n\
+		<name>dfs.namenode.checkpoint.dir</name>\n\
+		<value>file://tmp/dfs/namesecondary</value>\n\
+	</property>\n\
+	<property>\n\
+		<name>dfs.namenode.checkpoint.edits.dir</name>\n\
+		<value>file://tmp/dfs/namesecondary</value>\n\
+	</property>\n\
+	<property>\n\
+		<name>dfs.datanode.data.dir</name>\n\
+		<value>file://tmp/dfs/data</value>\n\
+	</property>\n\
+	<property>\n\
+		<name>dfs.blocksize</name>\n\
+		<value>1m</value>\n\
+	</property>\n\
+	<property>\n\
+		<name>dfs.replication</name>\n\
+		<value>2</value>\n\
+	</property>\n\
+</configuration>\n\
+' >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
 
 # set mapred-site.xml
-RUN echo '<?xml version="1.0"?>' >> $HADOOP_HOME/etc/hadoop/mapred-site.xml
-RUN echo '<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>' >> $HADOOP_HOME/etc/hadoop/mapred-site.xml
-RUN echo '<configuration>' >> $HADOOP_HOME/etc/hadoop/mapred-site.xml
-RUN echo '	<property>' >> $HADOOP_HOME/etc/hadoop/mapred-site.xml
-RUN echo '		<name>mapreduce.framework.name</name>' >> $HADOOP_HOME/etc/hadoop/mapred-site.xml
-RUN echo '		<value>yarn</value>' >> $HADOOP_HOME/etc/hadoop/mapred-site.xml
-RUN echo '	</property>' >> $HADOOP_HOME/etc/hadoop/mapred-site.xml
-RUN echo '</configuration>' >> $HADOOP_HOME/etc/hadoop/mapred-site.xml
+RUN echo '\
+<?xml version="1.0"?>\n\
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>\n\
+<configuration>\n\
+	<property>\n\
+		<name>mapreduce.framework.name</name>\n\
+		<value>yarn</value>\n\
+	</property>\n\
+</configuration>\n\
+' >> $HADOOP_HOME/etc/hadoop/mapred-site.xml
 
 
