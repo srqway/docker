@@ -1,2 +1,0 @@
-docker run -itd --name="<<container>>" --net=none <<image>> /bin/bash
-./pipework docker0 <<container>> 172.17.42.2/24@172.17.42.1

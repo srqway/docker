@@ -75,4 +75,26 @@ RUN echo '\
 </configuration>\n\
 ' >> $HADOOP_HOME/etc/hadoop/mapred-site.xml
 
+# set ssh
+RUN apt-get -y install openssh-client
+RUN ssh-keygen -t dsa -P '' -f /root/.ssh/id_dsa
+RUN cat /root/.ssh/id_dsa.pub >> /root/.ssh/authorized_keys
+RUN chmod 600 /root/.ssh/authorized_keys
+
+# set script
+RUN echo \
+'#!/bin/bash\n'\
+'\
+echo "172.17.42.201 master1" >> /etc/hosts\n\
+echo "172.17.42.199 master2" >> /etc/hosts\n\
+echo "172.17.42.31 worker1" >> /etc/hosts\n\
+echo "172.17.42.32 worker2" >> /etc/hosts\n\
+echo "172.17.42.33 worker3" >> /etc/hosts\n\
+echo "172.17.42.34 worker4" >> /etc/hosts\n\
+echo "172.17.42.35 worker5" >> /etc/hosts\n\
+echo "172.17.42.36 worker6" >> /etc/hosts\n\
+exit 0\n\
+' > /root/thank.sh
+RUN chmod 755 /root/thank.sh
+
 
