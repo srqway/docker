@@ -1,0 +1,8 @@
+docker pull cloudera/quickstart:latest
+docker run --privileged=true --hostname=quickstart.cloudera -p 7180:7180 -p 8888:8888 -t -i cloudera/quickstart:latest /usr/bin/docker-quickstart
+
+# hue
+url : http://localhost:8888/
+username : cloudera
+password : cloudera
+
