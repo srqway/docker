@@ -1,0 +1,165 @@
+# usage: hdfs [--config confdir] [COMMAND] [GENERIC_OPTIONS] [COMMAND_OPTIONS]
+#	generic options :
+#		-conf <configuration file> : Specify an application configuration file.
+#		-D <property>=<value> : Use value for given property.
+#		-jt <local> or <resourcemanager:port> : Specify a ResourceManager. Applies only to job.
+#		-files <comma separated list of files> : Specify comma separated files to be copied to the map reduce cluster. Applies only to job.
+#		-libjars <comma seperated list of jars> : Specify comma separated jar files to include in the classpath. Applies only to job.
+#		-archives <comma separated list of archives> : Specify comma separated archives to be unarchived on the compute machines. Applies only to job.
+
+# appendToFile : hdfs dfs -appendToFile <localsrc> ... <dst> 
+hdfs dfs -appendToFile localfile1 localfile2 /user/hadoop/hadoopfile
+
+# cat : hdfs dfs -cat URI [URI ...]
+hdfs dfs -cat hdfs://nn1.example.com/file1 hdfs://nn2.example.com/file2
+
+# chgrp : hdfs dfs -chgrp [-R] GROUP URI [URI ...]
+
+# chmod : hdfs dfs -chmod [-R] <MODE[,MODE]... | OCTALMODE> URI [URI ...]
+
+# chown : hdfs dfs -chown [-R] [OWNER][:[GROUP]] URI [URI ]
+
+# copyFromLocal : hdfs dfs -copyFromLocal <localsrc> URI
+
+# copyToLocal : hdfs dfs -copyToLocal [-ignorecrc] [-crc] URI <localdst> 
+
+# count : hdfs dfs -count [-q] [-h] <paths> 
+hdfs dfs -count hdfs://nn1.example.com/file1 hdfs://nn2.example.com/file2
+hdfs dfs -count -q hdfs://nn1.example.com/file1
+hdfs dfs -count -q -h hdfs://nn1.example.com/file1
+
+# cp : hdfs dfs -cp [-f] [-p | -p[topax]] URI [URI ...] <dest>
+hdfs dfs -cp /user/hadoop/file1 /user/hadoop/file2 /user/hadoop/dir
+
+# du : hdfs dfs -du [-s] [-h] URI [URI ...]
+hdfs dfs -du /user/hadoop/dir1 /user/hadoop/file1 hdfs://nn.example.com/user/hadoop/dir1
+
+# expunge : hdfs dfs -expunge
+
+# get : hdfs dfs -get [-ignorecrc] [-crc] <src> <localdst> 
+hdfs dfs -get hdfs://nn.example.com/user/hadoop/file localfile
+
+# getfacl : hdfs dfs -getfacl [-R] <path> 
+hdfs dfs -getfacl /file
+hdfs dfs -getfacl -R /dir
+
+# getfattr : hdfs dfs -getfattr [-R] -n name | -d [-e en] <path> 
+hdfs dfs -getfattr -d /file
+hdfs dfs -getfattr -R -n user.myAttr /dir
+
+# getmerge : hdfs dfs -getmerge <src> <localdst> [addnl]
+
+# ls : hdfs dfs -ls [-R] <args>
+
+# mkdir : hdfs dfs -mkdir [-p] <paths> 
+hdfs dfs -mkdir /user/hadoop/dir1 /user/hadoop/dir2
+hdfs dfs -mkdir hdfs://nn1.example.com/user/hadoop/dir hdfs://nn2.example.com/user/hadoop/dir
+
+# moveFromLocal : hdfs dfs -moveFromLocal <localsrc> <dst> 
+
+# mv : hdfs dfs -mv URI [URI ...] <dest> 
+hdfs dfs -mv /user/hadoop/file1 /user/hadoop/file2
+hdfs dfs -mv hdfs://nn.example.com/file1 hdfs://nn.example.com/file2 hdfs://nn.example.com/file3 hdfs://nn.example.com/dir1
+
+# put : hdfs dfs -put <localsrc> ... <dst> 
+hdfs dfs -put localfile1 localfile2 /user/hadoop/hadoopdir
+hdfs dfs -put localfile hdfs://nn.example.com/hadoop/hadoopfile
+#	reads the input from stdin
+hdfs dfs -put - hdfs://nn.example.com/hadoop/hadoopfile
+
+# rm : hdfs dfs -rm [-f] [-r|-R] [-skipTrash] URI [URI ...]
+
+# setfacl : hdfs dfs -setfacl [-R] [-b|-k -m|-x <acl_spec> <path>]|[--set <acl_spec> <path>] 
+hdfs dfs -setfacl -m user:hadoop:rw- /file
+
+# setfattr : hdfs dfs -setfattr -n name [-v value] | -x name <path> 
+hdfs dfs -setfattr -n user.myAttr -v myValue /file
+
+# setrep : hdfs dfs -setrep [-R] [-w] <numReplicas> <path> 
+hdfs dfs -setrep -w 3 /user/hadoop/dir1
+
+# stat : hdfs dfs -stat URI [URI ...]
+hdfs dfs -stat path
+
+# tail : hdfs dfs -tail [-f] URI
+
+# test : hdfs dfs -test -[ezd] URI
+#	The -e option will check to see if the file exists, returning 0 if true.
+#	The -z option will check to see if the file is zero length, returning 0 if true.
+#	The -d option will check to see if the path is directory, returning 0 if true.
+hdfs dfs -test -e filename
+
+# text : hdfs dfs -text <src> 
+
+# touchz : hdfs dfs -touchz URI [URI ...]
+hdfs dfs -touchz pathname
+
+# fetchdt : hdfs fetchdt [GENERIC_OPTIONS] [--webservice <namenode_http_addr>] <path> 
+
+# fsck : hdfs fsck [GENERIC_OPTIONS] <path> [-list-corruptfileblocks | [-move | -delete | -openforwrite] [-files [-blocks [-locations | -racks]]]] [-includeSnapshots]
+#	path : Start checking from this path.
+#	-move : Move corrupted files to /lost+found
+#	-delete : Delete corrupted files.
+#	-files : Print out files being checked.
+#	-openforwrite : Print out files opened for write.
+#	-includeSnapshots : Include snapshot data if the given path indicates a snapshottable directory or there are snapshottable directories under it.
+#	-list-corruptfileblocks : Print out list of missing blocks and files they belong to.
+#	-blocks : Print out block report.
+#	-locations : Print out locations for every block.
+#	-racks : Print out network topology for data-node locations.
+
+# varsion : hdfs version
+
+# balancer : hdfs balancer [-threshold <threshold>] [-policy <policy>]
+
+# datanode : hdfs datanode [-regular | -rollback | -rollingupgrace rollback]
+
+# dfsadmin : hdfs dfsadmin [GENERIC_OPTIONS]
+          [-report [-live] [-dead] [-decommissioning]]
+          [-safemode enter | leave | get | wait]
+          [-saveNamespace]
+          [-rollEdits]
+          [-restoreFailedStorage true|false|check]
+          [-refreshNodes]
+          [-setQuota <quota> <dirname>...<dirname>]
+          [-clrQuota <dirname>...<dirname>]
+          [-setSpaceQuota <quota> <dirname>...<dirname>]
+          [-clrSpaceQuota <dirname>...<dirname>]
+          [-setStoragePolicy <path> <policyName>]
+          [-getStoragePolicy <path>]
+          [-finalizeUpgrade]
+          [-rollingUpgrade [<query>|<prepare>|<finalize>]]
+          [-metasave filename]
+          [-refreshServiceAcl]
+          [-refreshUserToGroupsMappings]
+          [-refreshSuperUserGroupsConfiguration]
+          [-refreshCallQueue]
+          [-refresh <host:ipc_port> <key> [arg1..argn]]
+          [-printTopology]
+          [-refreshNamenodes datanodehost:port]
+          [-deleteBlockPool datanode-host:port blockpoolId [force]]
+          [-setBalancerBandwidth <bandwidth in bytes per second>]
+          [-allowSnapshot <snapshotDir>]
+          [-disallowSnapshot <snapshotDir>]
+          [-fetchImage <local directory>]
+          [-shutdownDatanode <datanode_host:ipc_port> [upgrade]]
+          [-getDatanodeInfo <datanode_host:ipc_port>]
+          [-help [cmd]]
+
+# mover : hdfs mover [-p <files/dirs> | -f <local file name>]
+
+# namenode : hdfs namenode [-backup] |
+          [-checkpoint] |
+          [-format [-clusterid cid ] [-force] [-nonInteractive] ] |
+          [-upgrade [-clusterid cid] [-renameReserved<k-v pairs>] ] |
+          [-upgradeOnly [-clusterid cid] [-renameReserved<k-v pairs>] ] |
+          [-rollback] |
+          [-rollingUpgrade <downgrade|rollback> ] |
+          [-finalize] |
+          [-importCheckpoint] |
+          [-initializeSharedEdits] |
+          [-bootstrapStandby] |
+          [-recover [-force] ] |
+          [-metadataVersion ]
+
+# secondarynamenode : hdfs secondarynamenode [-checkpoint [force]] | [-format] | [-geteditsize]
