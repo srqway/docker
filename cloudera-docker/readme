@@ -6,3 +6,7 @@ url : http://localhost:8888/
 username : cloudera
 password : cloudera
 
+# oozie
+http://localhost:11000/
+#	available sharelib
+oozie admin -shareliblist -oozie http://localhost:11000/oozie
