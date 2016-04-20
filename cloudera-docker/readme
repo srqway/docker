@@ -1,8 +1,20 @@
 docker pull cloudera/quickstart:latest
 docker run --privileged=true --hostname=quickstart.cloudera -p 7180:7180 -p 8888:8888 -t -i cloudera/quickstart:latest /usr/bin/docker-quickstart
+docker run --privileged=true --hostname=quickstart.cloudera -p 7000-65535:7000-65535 -t -i cloudera/quickstart:latest /usr/bin/docker-quickstart
 
-# hdfs
+# hadoop
+#	namenode
+http://localhost:8020/
 http://localhost:50070/
+#	datanode
+http://localhost:50075/
+#	Secondarynamenode
+http://localhost:50090/
+#	jobtracker
+http://localhost:8032/
+
+#	config path
+/etc/hadoop/conf
 
 # hue
 url : http://localhost:8888/
@@ -11,5 +23,9 @@ password : cloudera
 
 # oozie
 http://localhost:11000/
+#	config path
+/etc/oozie/conf
+#	log path
+/var/log/oozie
 #	available sharelib
 oozie admin -shareliblist -oozie http://localhost:11000/oozie
