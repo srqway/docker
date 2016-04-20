@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
-<configuration>
-	<property>
-		<name>hbase.zookeeper.quorum</name>
-		<value>master1.eitc.im,worker4.eitc.im,worker1.eitc.im,worker2.eitc.im,worker3.eitc.im,worker5.eitc.im,worker6.eitc.im</value>
-	</property>
-</configuration>
