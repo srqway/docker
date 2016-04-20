@@ -3,6 +3,8 @@ docker run --privileged=true --hostname=quickstart.cloudera -p 7180:7180 -p 8888
 docker run --privileged=true --hostname=quickstart.cloudera -p 7000-65535:7000-65535 -t -i cloudera/quickstart:latest /usr/bin/docker-quickstart
 
 # hadoop
+#	config path
+/etc/hadoop/conf
 #	namenode
 http://localhost:8020/
 http://localhost:50070/
@@ -12,9 +14,6 @@ http://localhost:50075/
 http://localhost:50090/
 #	jobtracker
 http://localhost:8032/
-
-#	config path
-/etc/hadoop/conf
 
 # hue
 url : http://localhost:8888/
