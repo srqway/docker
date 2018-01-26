@@ -1,25 +1,30 @@
-# pull redis
+# 1 master and 1 slave only 
+## pull redis
 docker pull redis
 
-# start master
+## start master
 docker run -it --name master redis /bin/bash
 
-# start slave
+## start slave
 docker run -it --name slave --link master:master redis /bin/bash
 
-# start master
-wget http://download.redis.io/redis-stable/redis.conf $(docker inspect --format="{{range .Mounts}}{{.Source}}{{end}}" master)
+## start master
+wget http://download.redis.io/redis-stable/redis.conf $(docker inspect --format="{{range .Mounts}}{{.Source}}{{end}}/" master)
 vi $(docker inspect --format="{{range .Mounts}}{{.Source}}{{end}}" master)/redis.conf
 	# bind 127.0.0.1
 	protected-mode no
 	daemonize yes
+	logfile "/data/redis.log"
 << master >>redis-server /data/redis.conf
 
-# start slave
-wget http://download.redis.io/redis-stable/redis.conf $(docker inspect --format="{{range .Mounts}}{{.Source}}{{end}}" slave)
+## start slave
+wget http://download.redis.io/redis-stable/redis.conf $(docker inspect --format="{{range .Mounts}}{{.Source}}{{end}}/" slave)
 vi $(docker inspect --format="{{range .Mounts}}{{.Source}}{{end}}" slave)/redis.conf
 	daemonize yes
 	slaveof master 6379
+	logfile "/data/redis.log"
 << slave >>redis-server /data/redis.conf
+
+
 
 
