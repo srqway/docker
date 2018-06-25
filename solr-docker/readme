@@ -1,0 +1,18 @@
+docker run --name solr-docker -d -p 8983:8983 -t solr:7.3.1-alpine
+docker exec -it --user=solr solr-docker bin/solr create_core -c solr-docker
+docker exec -it --user=solr solr-docker bin/post -c solr-docker example/exampledocs/manufacturers.xml
+
+# using zooKeeper
+docker create --name solr-docker -P solr:7.3.1-alpine
+docker cp solr-docker:/opt/solr/bin/solr.in.sh /tmp/
+sed -i -e 's/#ZK_HOST=.*/ZK_HOST=localhost:2181/' solr.in.sh
+docker cp solr.in.sh solr-docker:/opt/solr/bin/solr.in.sh
+docker start solr-docker
+
+# mount data volume
+mkdir /tmp/solr-docker
+chown 8983:8983 /tmp/solr-docker
+docker run -it --rm -v /tmp/solr-docker:/temp:z solr:7.3.1-alpine cp -r server/solr /temp
+SOLR_CONTAINER=$(docker run --name solr-docker -d -p 8983:8983 -v /tmp/solr-docker/solr:/opt/solr/server/solr:z solr:7.3.1-alpine)
+docker exec -it $SOLR_CONTAINER solr create_core -c solr-docker
+
