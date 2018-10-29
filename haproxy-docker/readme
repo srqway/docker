@@ -2,5 +2,10 @@
 docker pull haproxy:1.8.14-alpine
 
 # basic
-docker run -d --name tomcat --net=host tomcat:8.5.34-jre8-alpine
-docker run -e "TZ=Asia/Taipei" -d --name haproxy --net=host -v /home/hsiehpinghan/git/docker/haproxy-docker/cfg/basic:/usr/local/etc/haproxy:z haproxy:1.8.14-alpine
+docker run -d -p 8080:8080 -e "TZ=Asia/Taipei" tomcat:8.5.34-jre8-alpine
+docker run -d --net=host -e "TZ=Asia/Taipei" -v /home/hsiehpinghan/git/docker/haproxy-docker/cfg/basic:/usr/local/etc/haproxy:z haproxy:1.8.14-alpine
+
+# load balance
+docker run -d -p 8080:8080 -e "TZ=Asia/Taipei" tomcat:8.5.34-jre8-alpine
+docker run -d -p 8081:8080 -e "TZ=Asia/Taipei" tomcat:8.5.34-jre8-alpine
+docker run -d --net=host -e "TZ=Asia/Taipei" -v /home/hsiehpinghan/git/docker/haproxy-docker/cfg/load_balance:/usr/local/etc/haproxy:z haproxy:1.8.14-alpine
