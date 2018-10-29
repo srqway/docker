@@ -1,0 +1,6 @@
+# install (reference : http://cbonte.github.io/haproxy-dconv/1.8/configuration.html)
+docker pull haproxy:1.8.14-alpine
+
+# basic
+docker run -d --name tomcat --net=host tomcat:8.5.34-jre8-alpine
+docker run -e "TZ=Asia/Taipei" -d --name haproxy --net=host -v /home/hsiehpinghan/git/docker/haproxy-docker/cfg/basic:/usr/local/etc/haproxy:z haproxy:1.8.14-alpine
