@@ -1,0 +1,39 @@
+# install latest docker-ce (https://raw.githubusercontent.com/hsiehpinghan/example/master/docker-example/readme)
+
+# Launch Exhibitor (Zookeeper)
+docker run -d --net=host netflixoss/exhibitor:1.5.2
+
+# Launch Mesos-Master
+mkdir -p /tmp/mesos/log
+mkdir -p /tmp/mesos/tmp
+docker run -d --net=host \
+  -e MESOS_PORT=5050 \
+  -e MESOS_ZK=zk://127.0.0.1:2181/mesos \
+  -e MESOS_QUORUM=1 \
+  -e MESOS_REGISTRY=in_memory \
+  -e MESOS_LOG_DIR=/var/log/mesos \
+  -e MESOS_WORK_DIR=/var/tmp/mesos \
+  -v "/tmp/mesos/log:/var/log/mesos:z" \
+  -v "/tmp/mesos/tmp:/var/tmp/mesos:z" \
+  mesosphere/mesos-master:1.7.0
+
+# Launch Mesos-Slave
+mkdir -p /tmp/mesos/log
+mkdir -p /tmp/mesos/tmp
+docker run -d --net=host --privileged \
+  -e MESOS_PORT=5051 \
+  -e MESOS_MASTER=zk://127.0.0.1:2181/mesos \
+  -e MESOS_SWITCH_USER=0 \
+  -e MESOS_CONTAINERIZERS=docker,mesos \
+  -e MESOS_LOG_DIR=/var/log/mesos \
+  -e MESOS_WORK_DIR=/var/tmp/mesos \
+  -e MESOS_SYSTEMD_ENABLE_SUPPORT=false \
+  -v "/tmp/mesos/log:/var/log/mesos:z" \
+  -v "/tmp/mesos/tmp:/var/tmp/mesos:z" \
+  -v /var/run/docker.sock:/var/run/docker.sock:z \
+  -v /cgroup:/cgroup:z \
+  -v /sys:/sys:z \
+  -v /bin/docker:/usr/local/bin/docker:z \
+  mesosphere/mesos-slave:1.7.0
+
+
