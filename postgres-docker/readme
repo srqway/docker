@@ -1,0 +1,31 @@
+# pull image
+docker pull postgres:11.1-alpine
+docker pull dpage/pgadmin4:3.6
+
+# start postgres container
+mkdir /tmp/postgres
+docker run --name postgres -p 5432:5432 \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD='!)09w5t43w1oJ' \
+  -e POSTGRES_DB=postgres \
+  -v /tmp/postgres:/var/lib/postgresql/data:z \
+  -d postgres:11.1-alpine -h '*'
+
+# start pgadmin4 container
+mkdir /tmp/pgadmin
+docker run -p 80:80 \
+  -e "PGADMIN_DEFAULT_EMAIL=thank.hsiehpinghan@gmail.com" \
+  -e "PGADMIN_DEFAULT_PASSWORD=*0tqej8hfB" \
+  -v "/tmp/pgadmin:/var/lib/pgadmin:z" \
+  --link postgres:postgres \
+  -d dpage/pgadmin4:3.6
+http://localhost/   (hostname should be postgres)
+
+# start psql
+docker run -it --link postgres:postgres postgres:11.1-alpine psql -h postgres -U postgres
+
+# install pgAdmin 4
+yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+yum install https://download.postgresql.org/pub/repos/yum/11/redhat/rhel-7-x86_64/pgdg-centos11-11-2.noarch.rpm
+yum install pgadmin4
+
