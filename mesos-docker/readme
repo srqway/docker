@@ -1,9 +1,9 @@
 # install latest docker-ce (https://raw.githubusercontent.com/hsiehpinghan/example/master/docker-example/readme)
 
-# Launch Exhibitor (Zookeeper)
-docker run -d --net=host netflixoss/exhibitor:1.5.2
+# Launch Exhibitor (Zookeeper) (http://localhost:18080/exhibitor/v1/ui/index.html)
+docker run -d --net=host netflixoss/exhibitor:1.5.2 --port 18080
 
-# Launch Mesos-Master
+# Launch Mesos-Master (http://localhost:5050)
 mkdir -p /tmp/mesos/log
 mkdir -p /tmp/mesos/tmp
 docker run -d --net=host \
@@ -35,5 +35,10 @@ docker run -d --net=host --privileged \
   -v /sys:/sys:z \
   -v /bin/docker:/usr/local/bin/docker:z \
   mesosphere/mesos-slave:1.7.0
+
+# Launch Marathon (http://localhost:8080)
+docker run -d --net=host \
+  mesosphere/marathon:v1.7.174 --master zk://127.0.0.1:2181/mesos --zk zk://127.0.0.1:2181/marathon
+  
 
 
