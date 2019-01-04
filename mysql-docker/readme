@@ -1,0 +1,12 @@
+# pull image
+docker pull mysql:5.5.62
+docker pull adminer:4.7.0
+
+# start mysql container
+docker run -itd --name mysql --net="host" -e MYSQL_ROOT_PASSWORD='%j6w1oW' mysql:5.5.62
+
+# start mysql shell
+docker exec -it mysql sh -c 'exec mysql -h"localhost" -P"3306" -uroot -p"%j6w1oW"'
+
+# start adminer
+docker run -it --net="host" -p 8080:8080 -e ADMINER_DEFAULT_SERVER=127.0.0.1 adminer:4.7.0
